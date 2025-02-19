@@ -5,6 +5,5 @@ const router = Router();
 
 
 router.get("/", integrationJSON);
-router.get("/updates", handleTelexWebhook);
 
 export default router;

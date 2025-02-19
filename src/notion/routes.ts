@@ -3,6 +3,6 @@ import { handleTelexWebhook } from "../telex/services/webhooks";
 
 const router = Router();
 
-router.post("/", handleTelexWebhook);
+router.post("/updates", handleTelexWebhook);
 
 export default router;
