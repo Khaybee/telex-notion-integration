@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/integration.json', telexRouter);
-app.use('/notion', notionRouter);
+app.use('/tick', notionRouter);
 
 // Define a route
 app.get("/api/v1/", (req, res) => {
