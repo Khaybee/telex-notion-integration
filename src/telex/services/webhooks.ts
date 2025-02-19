@@ -15,8 +15,19 @@ appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async () => {
 
 export async function handleTelexWebhook(req: Request, res: Response) {
     try {
+
+        const { channel_id, return_url } = req.body;
+
+        console.log('data from telex:- ', req.body);
+
+	if (!channel_id || !return_url) {
+		return res.status(404).json({
+			status: 'error',
+			message: 'channel_id and return_url are required',
+		});
+	}
+
         const data = req.body;
-        console.log('data from telex:- ', data);
 
         appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK, data);
         
