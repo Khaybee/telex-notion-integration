@@ -13,8 +13,6 @@ const tasks = await getDatabaseData();
 
 const formattedTasks = await formatOutputMessage(tasks);
 
-// console.log("formattedTasks:- ", formattedTasks);
-
 const payload = {
     event_name: "task_updates",
     message: formattedTasks,

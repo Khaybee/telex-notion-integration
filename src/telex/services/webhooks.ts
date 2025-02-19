@@ -7,8 +7,6 @@ import { IWebhookResponse } from "../types";
 
 appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async (payload: IWebhookResponse) => {
     try {
-        console.log(payload);
-
         await sendTelexUpdate(payload);
         console.log('Telex update sent successfully');
 
@@ -23,7 +21,7 @@ export const handleTelexWebhook = async (req: Request, res: Response) => {
 
         const webhookResponse: IWebhookResponse = req.body;
 
-        console.log('data from telex:- ', webhookResponse);
+        console.log('data from telex:- ',);
 
         if (!webhookResponse.channel_id || !webhookResponse.return_url) {
             return errorHandler(res, 'channel_id and return_url are required', 404);
