@@ -80,7 +80,7 @@ export const getDueDateTasks = async (tasks: ExtractedTask[]): Promise<Record<st
     };
   }
   
-export const formatOutputMessage = (tasks: ExtractedTask[]) => {
+export const formatOutputMessage = async (tasks: ExtractedTask[]) => {
     let message = "**📌 Notion Task Updates**\n\n";
   
     const completedTasks = tasks.filter((task) => task.status === "Done");
