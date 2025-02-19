@@ -18,6 +18,7 @@ export const integrationJSON = (req: Request, res: Response) => {
         "background_color": "#fff"
       },
       "is_active": true,
+      "integration_category": "Project Management",
       "integration_type": "interval",
       "key_features": [
         "Daily updates",
