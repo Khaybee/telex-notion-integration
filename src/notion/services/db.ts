@@ -5,7 +5,7 @@ const baseUrl = process.env.NOTION_BASE_URL
 const databaseId = process.env.NOTION_DATABASE_ID
 
 export const getDatabaseData = async (): Promise<ExtractedTask[]> => {
-    const response = await axios.post<NotionResponse>(`${baseUrl}/databases/${databaseId}/query`, {
+    const response = await axios.post<NotionResponse>(`${baseUrl}/databases/${databaseId}/query`, {}, {
         headers: {
             'Authorization': `Bearer ${process.env.NOTION_API_KEY}`,
             'Content-Type': 'application/json',

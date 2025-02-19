@@ -10,6 +10,8 @@ export const sendTelexUpdate = async () => {
     try {
 const tasks = await getDatabaseData();
 
+// console.log("tasks:- ", tasks);
+
 const formattedTasks = await formatOutputMessage(tasks);
 
 console.log("formattedTasks:- ", formattedTasks);
@@ -18,7 +20,7 @@ const payload = {
     event_name: "task_updates",
     message: formattedTasks,
     status: "success",
-    username: "Khaybee",
+    username: "Notion Bot",
 }
 
 const response = await axios.post(TELEX_WEBHOOK_URL, payload, {
@@ -37,18 +39,3 @@ return true;
         throw error;
     }
 }
-
-appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async () => {
-    try {
-        console.log("Sending telex update");
-
-        await sendTelexUpdate();
-        
-        console.log('Telex update sent successfully');
-
-    } catch (error) {
-        console.error('Failed to send telex update:', error);
-        // Optionally emit an error event if you want to handle failures elsewhere
-        appEmitter.emit('telexError', error);
-    }
-});

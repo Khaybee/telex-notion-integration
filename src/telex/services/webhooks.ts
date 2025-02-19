@@ -1,13 +1,23 @@
 import { Request, Response } from "express";
 import { appEmitter } from "../../global/events";
 import { TELEX_EVENTS } from "../events";
+import { sendTelexUpdate } from "./sendTelex";
+
+appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async () => {
+    try {
+        await sendTelexUpdate();
+        console.log('Telex update sent successfully');
+
+    } catch (error) {
+        console.error('Failed to send telex update:', error);
+    }
+});
 
 export async function handleTelexWebhook(req: Request, res: Response) {
     try {
         const data = req.body;
         console.log('data from telex:- ', data);
-        
-        // Pass the data to the event listener
+
         appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK, data);
         
         res.status(200).json({ message: "Webhook received" });
