@@ -7,7 +7,8 @@ export async function handleTelexWebhook(req: Request, res: Response) {
 
     console.log('data from telex:- ', data);
     
+    appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK);
+    
     res.status(200).json({message: "Webhook received"});
 
-    appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK);
 }
