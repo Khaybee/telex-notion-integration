@@ -17,7 +17,7 @@ app.use('/notion', notionRouter);
 
 // Define a route
 app.get("/api/v1/", (req, res) => {
-  res.send("Hello, Wallet user!");
+  res.send("Hello, Bot user!");
 });
 
 // Start the server
