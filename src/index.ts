@@ -16,7 +16,7 @@ app.use('/integration.json', telexRouter);
 app.use('/notion-updates', notionRouter);
 
 // Define a route
-app.get("/api/v1/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello, Bot user!");
 });
 
