@@ -3,12 +3,13 @@ import { appEmitter } from "../../global/events";
 import { TELEX_EVENTS } from "../events";
 import { sendTelexUpdate } from "./sendTelex";
 import { errorHandler, successHandler } from "../../global/utils";
+import { IWebhookResponse } from "../types";
 
 appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async (payload: IWebhookResponse) => {
     try {
         console.log(payload);
 
-        await sendTelexUpdate();
+        await sendTelexUpdate(payload);
         console.log('Telex update sent successfully');
 
     } catch (error) {
@@ -16,10 +17,6 @@ appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async (payload: IWebhookResponse) => {
     }
 });
 
-export interface IWebhookResponse {
-    channel_id: string;
-    return_url: string;
-}
 
 export const handleTelexWebhook = async (req: Request, res: Response) => {
     try {

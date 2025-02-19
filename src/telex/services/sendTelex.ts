@@ -3,18 +3,17 @@ import { appEmitter } from "../../global/events";
 import { getDatabaseData } from "../../notion/services/db";
 import { formatOutputMessage } from "../../notion/services/formatData";
 import { TELEX_EVENTS } from "../events";
+import { IWebhookResponse } from "../types";
 
-const TELEX_WEBHOOK_URL = process.env.TELEX_TARGET_URL;
+// const TELEX_WEBHOOK_URL = process.env.TELEX_TARGET_URL;
 
-export const sendTelexUpdate = async () => {
+export const sendTelexUpdate = async (data: IWebhookResponse) => {
     try {
 const tasks = await getDatabaseData();
 
-// console.log("tasks:- ", tasks);
-
 const formattedTasks = await formatOutputMessage(tasks);
 
-console.log("formattedTasks:- ", formattedTasks);
+// console.log("formattedTasks:- ", formattedTasks);
 
 const payload = {
     event_name: "task_updates",
@@ -23,7 +22,7 @@ const payload = {
     username: "Notion Bot",
 }
 
-const response = await axios.post(TELEX_WEBHOOK_URL, payload, {
+const response = await axios.post(`${data.return_url}`, payload, {
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
