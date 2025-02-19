@@ -2,9 +2,12 @@ import { Request, Response } from "express";
 import { appEmitter } from "../../global/events";
 import { TELEX_EVENTS } from "../events";
 import { sendTelexUpdate } from "./sendTelex";
+import { errorHandler, successHandler } from "../../global/utils";
 
-appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async () => {
+appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async (payload: IWebhookResponse) => {
     try {
+        console.log(payload);
+
         await sendTelexUpdate();
         console.log('Telex update sent successfully');
 
@@ -13,25 +16,32 @@ appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async () => {
     }
 });
 
-export async function handleTelexWebhook(req: Request, res: Response) {
+export interface IWebhookResponse {
+    channel_id: string;
+    return_url: string;
+}
+
+export const handleTelexWebhook = async (req: Request, res: Response) => {
     try {
 
-        const { channel_id, return_url } = req.body;
+        const webhookResponse: IWebhookResponse = req.body;
 
-        console.log('data from telex:- ', req.body);
+        console.log('data from telex:- ', webhookResponse);
 
-	if (!channel_id || !return_url) {
-		res.status(404).json({
-			status: 'error',
-			message: 'channel_id and return_url are required',
-		});
-	}
+        if (!webhookResponse.channel_id || !webhookResponse.return_url) {
+            return errorHandler(res, 'channel_id and return_url are required', 404);
+        }
 
-        appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK, {channel_id, return_url});
-        
-        res.status(200).json({ message: "Webhook received" });
+        const payload = {
+            channel_id: webhookResponse.channel_id,
+            return_url: webhookResponse.return_url
+        }
+
+        appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK, payload);
+
+        return successHandler(res, "Webhook received", payload);
     } catch (error) {
         console.error('Error processing webhook:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        return errorHandler(res, 'Internal server error', 500);
     }
 }
