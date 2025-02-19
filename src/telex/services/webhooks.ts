@@ -21,7 +21,7 @@ export async function handleTelexWebhook(req: Request, res: Response) {
         console.log('data from telex:- ', req.body);
 
 	if (!channel_id || !return_url) {
-		return res.status(404).json({
+		res.status(404).json({
 			status: 'error',
 			message: 'channel_id and return_url are required',
 		});

@@ -58,7 +58,7 @@ export const integrationJSON = (req: Request, res: Response) => {
         }
       ],
       "target_url": targetUrl,
-      "tick_url": `${hostUrl}notion/updates`
+      "tick_url": `${hostUrl}notion-updates`
       // "tick_url": `${hostUrl}telex/integration`
     }
   }
