@@ -39,5 +39,16 @@ return true;
 }
 
 appEmitter.on(TELEX_EVENTS.TELEX_WEBHOOK, async () => {
-    await sendTelexUpdate();
-})
+    try {
+        console.log("Sending telex update");
+
+        await sendTelexUpdate();
+        
+        console.log('Telex update sent successfully');
+
+    } catch (error) {
+        console.error('Failed to send telex update:', error);
+        // Optionally emit an error event if you want to handle failures elsewhere
+        appEmitter.emit('telexError', error);
+    }
+});
