@@ -27,9 +27,7 @@ export async function handleTelexWebhook(req: Request, res: Response) {
 		});
 	}
 
-        const data = req.body;
-
-        appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK, data);
+        appEmitter.emit(TELEX_EVENTS.TELEX_WEBHOOK, {channel_id, return_url});
         
         res.status(200).json({ message: "Webhook received" });
     } catch (error) {
