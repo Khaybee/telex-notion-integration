@@ -83,15 +83,9 @@ export const getDueDateTasks = async (tasks: ExtractedTask[]): Promise<Record<st
 
 export const sendTaskNotifications = async (tasks: ExtractedTask[]): Promise<void> => {
     const { overdueTasks, stuckTasks } = await getDueDateTasks(tasks);
-
-    console.log('overdueTasks:- ', overdueTasks);
-    console.log('stuckTasks:- ', stuckTasks);
-
     // Send notifications for overdue tasks
     for (const task of overdueTasks) {
         if (task.assignees) {
-            console.log('task.assignees:- ', task.assignees);
-            
             for (const assignee of task.assignees) {
                 await sendEMail({
                     email: assignee.email,
@@ -112,7 +106,6 @@ export const sendTaskNotifications = async (tasks: ExtractedTask[]): Promise<voi
     // Send notifications for stuck tasks
     for (const task of stuckTasks) {
         if (task.assignees) {
-            console.log('task.assignees:- ', task.assignees);
             for (const assignee of task.assignees) {
                 await sendEMail({
                     email: assignee.email,
