@@ -36,7 +36,7 @@ export async function sendEMail(payload: IMailData): Promise<string> {
   }
 
   const mailOptions: SendMailOptions = {
-    from: '"Td4Wallet" <td4wallet@gmail.com>',
+    from: '"Notion Bot" <noreply@notionbot.com>',
     to: payload.email,
     subject: payload.subject,
     html: emailContent,

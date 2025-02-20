@@ -65,5 +65,15 @@ export interface NotionResponse {
   export interface ExtractedTask {
     [key: string]: string;
     url: string;
+    last_edited_time: string;
+    created_time: string;
+
   }
   
+  export interface TaskNotification {
+    task: string;
+    assignees?: { name: string; email: string; }[];
+    dueDate?: string;
+    status: string;
+    stuckForDays?: number;
+}

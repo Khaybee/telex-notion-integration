@@ -49,37 +49,7 @@ import { ExtractedTask } from "../types";
 //     };
 //   }
 
-export const getDueDateTasks = async (tasks: ExtractedTask[]): Promise<Record<string, any>> => {
-    const today = new Date();
 
-    const overdueTasks = tasks
-        .filter(
-            (task) => task.dueDate !== "No due date" && new Date(task.dueDate) < today  &&
-            task.Status !== "Done"
-        )
-        .map((task) => ({
-            task: task.name,
-            assignees: task.assignees,
-            dueDate: task.dueDate,
-            status: "Overdue",
-        }));
-
-    const stuckTasks = tasks
-        .filter((task) => task.status === "In Progress")
-        .map((task) => ({
-            task: task.name,
-            status: task.status,
-            stuckForDays: Math.ceil(
-                (today.getTime() - new Date(task.dueDate).getTime()) /
-                (1000 * 60 * 60 * 24)
-            ),
-        }));
-
-    return {
-        overdueTasks,
-        stuckTasks,
-    };
-}
 
 export const formatOutputMessage = async (tasks: ExtractedTask[]) => {
     let message = "**📌 Notion Task Updates**\n\n";

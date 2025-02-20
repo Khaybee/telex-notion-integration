@@ -13,7 +13,10 @@ export const getDatabaseData = async (): Promise<ExtractedTask[]> => {
         }
     })
     return response.data.results.map((task) => {
-        let extractedData = {}
+        let extractedData = {
+            created_time: task.created_time,
+            last_edited_time: task.last_edited_time
+        }
        for (const [key, value] of Object.entries(task.properties)) {
         switch (value.type) {
             case 'title':
@@ -58,6 +61,7 @@ export const getDatabaseData = async (): Promise<ExtractedTask[]> => {
                     };
         }
     }
+    // console.log('extractedData:- ', extractedData)
     return extractedData as ExtractedTask
     })
 }

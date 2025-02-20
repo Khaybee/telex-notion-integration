@@ -4,14 +4,17 @@ import { getDatabaseData } from "../../notion/services/db";
 import { formatOutputMessage } from "../../notion/services/formatData";
 import { TELEX_EVENTS } from "../events";
 import { IWebhookResponse } from "../types";
+import { sendTaskNotifications } from "../../notion/services/sendNotification";
 
-// const TELEX_WEBHOOK_URL = process.env.TELEX_TARGET_URL;
+const TELEX_URL = process.env.TELEX_TARGET_URL;
 
 export const sendTelexUpdate = async (data: IWebhookResponse) => {
     try {
 const tasks = await getDatabaseData();
 
 const formattedTasks = await formatOutputMessage(tasks);
+
+const notifications = await sendTaskNotifications(tasks);
 
 const payload = {
     event_name: "task_updates",
